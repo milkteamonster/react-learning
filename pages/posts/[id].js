@@ -12,6 +12,8 @@ export default function Post({postData}) {
 			{postData.id}
 			<br />
 			{postData.date}
+			<br />
+			<div dangerouslySetInnerHTML={{__html: postData.contentHtml}} />
 		</Layout>
 	);
 }
@@ -27,7 +29,9 @@ export async function getStaticPaths() {
 
 // Fetch necessary data for the blog post using params.id (使用 id 去抓取部落格文章需要的資料)
 export async function getStaticProps({params}) {
-	const postData = getPostData(params.id);
+	// Add the "await" keyword like this:
+	//這裡與先前比較增加了 await, 因為post.js那邊使用了async
+	const postData = await getPostData(params.id);
 	return {
 		props: {
 			postData,
